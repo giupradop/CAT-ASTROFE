@@ -20,9 +20,8 @@ public class PlayerController2D : MonoBehaviour
     [SerializeField] float fallGravityMultiplier = 2f;
 
     [Header("Ground Check")]
-    [SerializeField] Transform groundCheck;
-    [SerializeField] Vector2 groundCheckSize = new Vector2(0.9f, 0.1f);
     [SerializeField] LayerMask groundLayer;
+    [SerializeField] float maxGroundSlopeAngle = 45f;
     [SerializeField] float groundLossGracePeriod = 0.06f;
 
     [Header("Sitting")]
@@ -37,6 +36,7 @@ public class PlayerController2D : MonoBehaviour
     Rigidbody2D rb;
     SpriteRenderer spriteRenderer;
     Animator animator;
+    ContactFilter2D groundFilter;
 
     float moveInput;
     bool runHeld;
@@ -57,6 +57,10 @@ public class PlayerController2D : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         defaultGravityScale = rb.gravityScale;
         idleTimer = idleTimeBeforeSit;
+
+        // Only contacts whose normal points roughly up count as ground (flat floor = 90°).
+        groundFilter.SetLayerMask(groundLayer);
+        groundFilter.SetNormalAngle(90f - maxGroundSlopeAngle, 90f + maxGroundSlopeAngle);
     }
 
     void Update()
@@ -104,11 +108,7 @@ public class PlayerController2D : MonoBehaviour
 
     void CheckGrounded()
     {
-        bool overlapping = groundCheck != null &&
-            rb.linearVelocity.y <= 0.1f &&
-            Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0f, groundLayer);
-
-        if (overlapping)
+        if (rb.IsTouching(groundFilter))
         {
             isGrounded = true;
             timeSinceGroundOverlap = 0f;
@@ -182,12 +182,5 @@ public class PlayerController2D : MonoBehaviour
         animator.SetBool(GroundedParam, isGrounded);
         animator.SetFloat(VerticalVelocityParam, rb.linearVelocity.y);
         animator.SetBool(SittingParam, sitting);
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        if (groundCheck == null) return;
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
     }
 }
