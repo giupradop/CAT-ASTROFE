@@ -49,6 +49,7 @@ public class PlayerController2D : MonoBehaviour
     bool sitting;
     float standUpLockTimer;
     bool controlEnabled = true;
+    float forcedMoveInput;
 
     void Awake()
     {
@@ -86,13 +87,25 @@ public class PlayerController2D : MonoBehaviour
         controlEnabled = enabled;
     }
 
+    // Movement used while control is disabled (cutscenes): -1 left, 0 stop, 1 right.
+    public void SetForcedMove(float direction)
+    {
+        forcedMoveInput = Mathf.Clamp(direction, -1f, 1f);
+    }
+
     void ReadInput()
     {
         moveInput = 0f;
         runHeld = false;
 
+        if (!controlEnabled)
+        {
+            moveInput = forcedMoveInput;
+            return;
+        }
+
         var keyboard = Keyboard.current;
-        if (!controlEnabled || keyboard == null) return;
+        if (keyboard == null) return;
 
         if (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed) moveInput -= 1f;
         if (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed) moveInput += 1f;
