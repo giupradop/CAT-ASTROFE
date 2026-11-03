@@ -1,7 +1,5 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Collider2D))]
 public class LevelEndTrigger : MonoBehaviour
@@ -14,7 +12,7 @@ public class LevelEndTrigger : MonoBehaviour
     [SerializeField] Sprite endImage;
     [SerializeField, TextArea] string endMessage = "Bigode escapou!";
     [SerializeField] string nextSceneName;
-    [SerializeField] float delayBeforeNextScene = 3f;
+    [SerializeField] float delayBeforeNextScene = 1f;
 
     PlayerController2D playerInside;
     bool finished;
@@ -61,13 +59,8 @@ public class LevelEndTrigger : MonoBehaviour
         if (TutorialUI.Instance != null)
             TutorialUI.Instance.Show(this, endMessage, endImage);
 
+        // Waits delayBeforeNextScene (the end message stays on screen), fades to black, loads, fades in.
         if (!string.IsNullOrEmpty(nextSceneName))
-            StartCoroutine(LoadNextScene());
-    }
-
-    IEnumerator LoadNextScene()
-    {
-        yield return new WaitForSeconds(delayBeforeNextScene);
-        SceneManager.LoadScene(nextSceneName);
+            SceneTransition.LoadScene(nextSceneName, delayBeforeNextScene);
     }
 }
