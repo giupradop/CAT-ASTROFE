@@ -245,11 +245,10 @@ MonoBehaviour:
   coyoteTime: 0.1
   jumpBufferTime: 0.1
   fallGravityMultiplier: 2
-  groundCheck: {fileID: 8988935424852012586}
-  groundCheckSize: {x: 0.5, y: 0.3}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  maxGroundSlopeAngle: 45
   groundLossGracePeriod: 0.06
   idleTimeBeforeSit: 6
   standUpLockDuration: 0.8
