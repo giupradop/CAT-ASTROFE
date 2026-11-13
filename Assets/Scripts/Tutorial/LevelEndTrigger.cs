@@ -10,7 +10,7 @@ public class LevelEndTrigger : MonoBehaviour
 
     [Header("End")]
     [SerializeField] Sprite endImage;
-    [SerializeField, TextArea] string endMessage = "Bigode escapou!";
+    [SerializeField, TextArea] string endMessage = "";
     [SerializeField] string nextSceneName;
     [SerializeField] float delayBeforeNextScene = 1f;
 
@@ -59,7 +59,6 @@ public class LevelEndTrigger : MonoBehaviour
         if (TutorialUI.Instance != null)
             TutorialUI.Instance.Show(this, endMessage, endImage);
 
-        // Waits delayBeforeNextScene (the end message stays on screen), fades to black, loads, fades in.
         if (!string.IsNullOrEmpty(nextSceneName))
             SceneTransition.LoadScene(nextSceneName, delayBeforeNextScene);
     }
