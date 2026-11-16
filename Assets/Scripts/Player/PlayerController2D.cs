@@ -28,6 +28,16 @@ public class PlayerController2D : MonoBehaviour
     [SerializeField] float idleTimeBeforeSit = 3f;
     [SerializeField] float standUpLockDuration = 1f;
 
+    [Header("Audio")]
+    [Tooltip("Jump sounds (there are 5). One random clip plays on every jump, never the same twice in a row.")]
+    [SerializeField] AudioClip[] jumpClips = new AudioClip[5];
+    [SerializeField, Range(0f, 1f)] float jumpVolume = 0.8f;
+    [Tooltip("Played when Bigode touches the ground again after being in the air.")]
+    [SerializeField] AudioClip landClip;
+    [SerializeField, Range(0f, 1f)] float landVolume = 0.8f;
+    [Tooltip("Shortest time in the air (seconds) that counts as a landing. Avoids a sound on tiny bumps.")]
+    [SerializeField] float landMinAirTime = 0.15f;
+
     static readonly int SpeedParam = Animator.StringToHash("Speed");
     static readonly int GroundedParam = Animator.StringToHash("Grounded");
     static readonly int VerticalVelocityParam = Animator.StringToHash("VerticalVelocity");
@@ -51,15 +61,22 @@ public class PlayerController2D : MonoBehaviour
     bool controlEnabled = true;
     float forcedMoveInput;
 
+    AudioSource sfxSource;
+    int lastJump = -1;
+    float airTime;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        sfxSource = gameObject.AddComponent<AudioSource>();
+        sfxSource.playOnAwake = false;
+        sfxSource.loop = false;
+        sfxSource.spatialBlend = 0f;
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();
         defaultGravityScale = rb.gravityScale;
         idleTimer = idleTimeBeforeSit;
 
-        // Only contacts whose normal points roughly up count as ground (flat floor = 90°).
         groundFilter.SetLayerMask(groundLayer);
         groundFilter.SetNormalAngle(90f - maxGroundSlopeAngle, 90f + maxGroundSlopeAngle);
     }
@@ -87,7 +104,6 @@ public class PlayerController2D : MonoBehaviour
         controlEnabled = enabled;
     }
 
-    // Movement used while control is disabled (cutscenes): -1 left, 0 stop, 1 right.
     public void SetForcedMove(float direction)
     {
         forcedMoveInput = Mathf.Clamp(direction, -1f, 1f);
@@ -123,6 +139,10 @@ public class PlayerController2D : MonoBehaviour
     {
         if (rb.IsTouching(groundFilter))
         {
+            if (!isGrounded && airTime >= landMinAirTime)
+                PlayLandSound();
+            airTime = 0f;
+
             isGrounded = true;
             timeSinceGroundOverlap = 0f;
             coyoteTimer = coyoteTime;
@@ -131,7 +151,10 @@ public class PlayerController2D : MonoBehaviour
         {
             timeSinceGroundOverlap += Time.fixedDeltaTime;
             if (timeSinceGroundOverlap >= groundLossGracePeriod)
+            {
                 isGrounded = false;
+                airTime += Time.fixedDeltaTime;
+            }
         }
     }
 
@@ -156,7 +179,44 @@ public class PlayerController2D : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             coyoteTimer = 0f;
             jumpBufferTimer = 0f;
+            PlayJumpSound();
         }
+    }
+
+    void PlayJumpSound()
+    {
+        AudioClip clip = PickClip(jumpClips, ref lastJump);
+        if (clip != null)
+            sfxSource.PlayOneShot(clip, jumpVolume);
+    }
+
+    void PlayLandSound()
+    {
+        if (landClip != null)
+            sfxSource.PlayOneShot(landClip, landVolume);
+    }
+
+    static AudioClip PickClip(AudioClip[] clips, ref int last)
+    {
+        if (clips == null || clips.Length == 0) return null;
+
+        int filled = 0;
+        for (int i = 0; i < clips.Length; i++)
+            if (clips[i] != null) filled++;
+        if (filled == 0) return null;
+
+        int pick;
+        int safety = 0;
+        do
+        {
+            pick = Random.Range(0, clips.Length);
+            safety++;
+        }
+        while ((clips[pick] == null || (filled > 1 && pick == last)) && safety < 50);
+
+        if (clips[pick] == null) return null;
+        last = pick;
+        return clips[pick];
     }
 
     void ApplyFallGravity()

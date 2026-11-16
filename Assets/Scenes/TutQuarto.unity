@@ -12920,8 +12920,64 @@ PrefabInstance:
       value: 0.61538285
       objectReference: {fileID: 0}
     - target: {fileID: 8644558737311651575, guid: 57a3948d4769fa645ab9d8cde033fcf3, type: 3}
+      propertyPath: landClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 4c3ddc05eed00ba40b03a37375f5808c, type: 3}
+    - target: {fileID: 8644558737311651575, guid: 57a3948d4769fa645ab9d8cde033fcf3, type: 3}
+      propertyPath: jumpVolume
+      value: 0.525
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644558737311651575, guid: 57a3948d4769fa645ab9d8cde033fcf3, type: 3}
+      propertyPath: landVolume
+      value: 0.071
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644558737311651575, guid: 57a3948d4769fa645ab9d8cde033fcf3, type: 3}
+      propertyPath: landMinAirTime
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644558737311651575, guid: 57a3948d4769fa645ab9d8cde033fcf3, type: 3}
+      propertyPath: jumpClips.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644558737311651575, guid: 57a3948d4769fa645ab9d8cde033fcf3, type: 3}
       propertyPath: fallGravityMultiplier
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644558737311651575, guid: 57a3948d4769fa645ab9d8cde033fcf3, type: 3}
+      propertyPath: 'jumpClips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: db31d7bc39bd4aa4fae953557bf8116d, type: 3}
+    - target: {fileID: 8644558737311651575, guid: 57a3948d4769fa645ab9d8cde033fcf3, type: 3}
+      propertyPath: 'jumpClips.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: b8c7625cdf390db4d852f4b0f0c07606, type: 3}
+    - target: {fileID: 8644558737311651575, guid: 57a3948d4769fa645ab9d8cde033fcf3, type: 3}
+      propertyPath: 'jumpClips.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: e9af1500024a259439dd6d8cbab4e7a2, type: 3}
+    - target: {fileID: 8644558737311651575, guid: 57a3948d4769fa645ab9d8cde033fcf3, type: 3}
+      propertyPath: 'jumpClips.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: fbcc9ec128d7a7c47a0298f5e39a287f, type: 3}
+    - target: {fileID: 8644558737311651575, guid: 57a3948d4769fa645ab9d8cde033fcf3, type: 3}
+      propertyPath: 'jumpClips.Array.data[4]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644558737311651575, guid: 57a3948d4769fa645ab9d8cde033fcf3, type: 3}
+      propertyPath: 'meowClips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644558737311651575, guid: 57a3948d4769fa645ab9d8cde033fcf3, type: 3}
+      propertyPath: 'meowClips.Array.data[1]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644558737311651575, guid: 57a3948d4769fa645ab9d8cde033fcf3, type: 3}
+      propertyPath: 'meowClips.Array.data[2]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644558737311651575, guid: 57a3948d4769fa645ab9d8cde033fcf3, type: 3}
+      propertyPath: 'meowClips.Array.data[3]'
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

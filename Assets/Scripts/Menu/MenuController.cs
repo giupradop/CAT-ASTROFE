@@ -6,7 +6,8 @@ public class MenuController : MonoBehaviour
 
     [Header("Audio")]
     public AudioSource backgroundMusic;
-    public AudioSource clickSound;
+    public AudioSource inSound;
+    public AudioSource outSound;
 
     private void Start()
     {
@@ -20,19 +21,25 @@ public class MenuController : MonoBehaviour
 
     public void PlayGame()
     {
-        PlayClickSound();
+        PlayInSound();
         SceneTransition.LoadScene("TutQuarto", 1f);
     }
 
     public void QuitGame()
     {
-        PlayClickSound();
+        PlayOutSound();
         SceneTransition.Quit(1f);
     }
 
-    private void PlayClickSound()
+    private void PlayInSound()
     {
-        if (clickSound != null)
-            clickSound.Play();
+        if (inSound != null)
+            inSound.Play();
+    }
+
+    private void PlayOutSound()
+    {
+        if (outSound != null)
+            outSound.Play();
     }
 }
