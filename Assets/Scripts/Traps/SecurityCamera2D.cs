@@ -25,6 +25,8 @@ public class SecurityCamera2D : MonoBehaviour
     [SerializeField] private bool startClockwise = true;
 
     [Header("Detecção")]
+    public AudioSource detectSound;
+    private bool playerWasVisible;
     [SerializeField, Min(0.1f)] private float detectionTime = 2f;
     [SerializeField] private Sprite alertSprite;
     [SerializeField] private Material alertMaterial;
@@ -34,6 +36,7 @@ public class SecurityCamera2D : MonoBehaviour
     [SerializeField] private Color alertScreenColor = new Color(0.85f, 0.05f, 0.05f, 1f);
 
     [Header("Captura")]
+    public AudioSource captureSound;
     [SerializeField, Min(0f)] private float restartDelay = 0.4f;
     [SerializeField, Min(0.01f)] private float fadeDuration = 0.4f;
 
@@ -262,6 +265,12 @@ public class SecurityCamera2D : MonoBehaviour
 
         if (visiblePlayer != null)
         {
+            if (!playerWasVisible)
+            {
+                playerWasVisible = true;
+                PlayDetectSound();
+            }
+
             currentPlayer = visiblePlayer;
             detectionTimer += Time.deltaTime;
             ShowAlertIcon(true);
@@ -275,12 +284,17 @@ public class SecurityCamera2D : MonoBehaviour
         }
         else
         {
+            playerWasVisible = false;
             detectionTimer = 0f;
             currentPlayer = null;
             ShowAlertIcon(false);
         }
     }
-
+    private void PlayDetectSound()
+    {
+        if (detectSound != null)
+            detectSound.Play();
+    }
     private void ShowAlertIcon(bool show)
     {
         if (alertSprite == null)
@@ -314,6 +328,9 @@ public class SecurityCamera2D : MonoBehaviour
 
         if (currentPlayer != null)
             currentPlayer.SetControlEnabled(false);
+
+        if (captureSound != null)
+            captureSound.Play();
 
         ShowAlertIcon(false);
 

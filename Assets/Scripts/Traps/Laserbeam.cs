@@ -15,7 +15,13 @@ public class LaserBeam : MonoBehaviour
     [Header("Extras")]
     [SerializeField] GameObject[] toggledWithBeam;
 
+    [Header("Audio")]
+    public AudioSource turnOnSound;   
+    public AudioSource turnOffSound;  
+    public AudioSource loopSound;     
+
     [Header("Death")]
+    public AudioSource deathSound;
     [SerializeField] float restartDelay = 0.4f;
     [SerializeField] float fadeDuration = 0.4f;
 
@@ -33,12 +39,22 @@ public class LaserBeam : MonoBehaviour
         beamCollider = GetComponent<Collider2D>();
         beamRenderer = GetComponent<SpriteRenderer>();
         beamCollider.isTrigger = true;
+
+        Prepare(turnOnSound, false);
+        Prepare(turnOffSound, false);
+        Prepare(loopSound, true);
     }
 
     void OnEnable()
     {
         SetBeam(false);
         StartCoroutine(Cycle());
+    }
+
+    void OnDisable()
+    {
+        if (loopSound != null)
+            loopSound.Stop();
     }
 
     IEnumerator Cycle()
@@ -50,9 +66,13 @@ public class LaserBeam : MonoBehaviour
         while (true)
         {
             SetBeam(true);
+            PlaySound(turnOnSound);
+            StartLoop();
             yield return new WaitForSeconds(onDuration);
 
             SetBeam(false);
+            StopLoop();
+            PlaySound(turnOffSound);
             yield return new WaitForSeconds(offDuration);
         }
     }
@@ -67,6 +87,31 @@ public class LaserBeam : MonoBehaviour
         foreach (var extra in toggledWithBeam)
             if (extra != null)
                 extra.SetActive(on);
+    }
+
+    static void Prepare(AudioSource source, bool loop)
+    {
+        if (source == null) return;
+        source.playOnAwake = false;
+        source.loop = loop;
+    }
+
+    static void PlaySound(AudioSource source)
+    {
+        if (source != null)
+            source.Play();
+    }
+
+    void StartLoop()
+    {
+        if (loopSound != null && !loopSound.isPlaying)
+            loopSound.Play();
+    }
+
+    void StopLoop()
+    {
+        if (loopSound != null)
+            loopSound.Stop();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -88,6 +133,8 @@ public class LaserBeam : MonoBehaviour
 
         killed = true;
         player.SetControlEnabled(false);
+        if (deathSound != null)
+            deathSound.Play();
 
         SceneTransition.LoadScene(SceneManager.GetActiveScene().name, restartDelay, fadeDuration);
     }

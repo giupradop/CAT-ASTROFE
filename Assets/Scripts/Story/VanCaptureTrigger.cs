@@ -16,7 +16,8 @@ public class VanCaptureTrigger : MonoBehaviour
     [SerializeField] ScreenFader fader;
     [SerializeField] float fadeDuration = 1f;
     [SerializeField] string nextSceneName;
-    [SerializeField] float delayBeforeNextScene = 2f;
+    [SerializeField] float delayBeforeNextScene = 1f;
+    public AudioSource vancaptureSound;
 
     bool triggered;
 
@@ -49,10 +50,7 @@ public class VanCaptureTrigger : MonoBehaviour
             yield return fader.FadeTo(1f, fadeDuration);
 
         if (!string.IsNullOrEmpty(nextSceneName))
-        {
-            yield return new WaitForSeconds(delayBeforeNextScene);
-            SceneManager.LoadScene(nextSceneName);
-        }
+            SceneTransition.LoadScene(nextSceneName, delayBeforeNextScene);
     }
 
     // Keeps the cat running a few steps in the direction it was going, so it doesn't stop dead.
@@ -70,6 +68,7 @@ public class VanCaptureTrigger : MonoBehaviour
     {
         Vector3 start = van.position;
         Vector3 end = new Vector3(vanStopPoint.position.x, start.y, start.z); // stays in its lane, only X changes
+        vancaptureSound.Play();
         for (float t = 0f; t < 1f; t += Time.deltaTime / driveInDuration)
         {
             float eased = 1f - Mathf.Pow(1f - t, 3f); // fast at first, brakes into the stop

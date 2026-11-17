@@ -8,6 +8,9 @@ public class MouseRunner : MonoBehaviour
     [SerializeField] float jumpDuration = 0.6f;
     [SerializeField] bool spriteFacesRight = true;
 
+    [Header("Audio")]
+    [SerializeField] AudioSource alertClip;
+
     static readonly int RunningParam = Animator.StringToHash("Correndo");
 
     SpriteRenderer spriteRenderer;
@@ -18,6 +21,7 @@ public class MouseRunner : MonoBehaviour
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();
+
     }
 
     public void Run(Transform[] path, bool jumpFirstSegment, bool hideAtEnd)
@@ -29,6 +33,9 @@ public class MouseRunner : MonoBehaviour
 
     IEnumerator FollowPath(Transform[] path, bool jumpFirstSegment, bool hideAtEnd)
     {
+        if (alertClip != null)
+            alertClip.Play();
+
         SetRunning(true);
 
         for (int i = 0; i < path.Length; i++)

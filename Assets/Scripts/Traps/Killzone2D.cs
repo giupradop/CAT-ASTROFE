@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class KillZone2D : MonoBehaviour
 {
     [Header("Death")]
+    public AudioSource deathSound;
     [SerializeField] float restartDelay = 0.4f; 
     [SerializeField] float fadeDuration = 0.4f;
 
@@ -39,6 +40,8 @@ public class KillZone2D : MonoBehaviour
 
         killed = true;
         player.SetControlEnabled(false);
+        if (deathSound != null)
+            deathSound.Play();
 
         SceneTransition.LoadScene(SceneManager.GetActiveScene().name, restartDelay, fadeDuration);
     }

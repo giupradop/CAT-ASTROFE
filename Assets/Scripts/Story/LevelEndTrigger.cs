@@ -13,6 +13,7 @@ public class LevelEndTrigger : MonoBehaviour
     [SerializeField, TextArea] string endMessage = "";
     [SerializeField] string nextSceneName;
     [SerializeField] float delayBeforeNextScene = 1f;
+    public AudioSource endSound;
 
     PlayerController2D playerInside;
     bool finished;
@@ -59,7 +60,11 @@ public class LevelEndTrigger : MonoBehaviour
         if (TutorialUI.Instance != null)
             TutorialUI.Instance.Show(this, endMessage, endImage);
 
+        if (endSound != null)
+            endSound.Play();
+
         if (!string.IsNullOrEmpty(nextSceneName))
             SceneTransition.LoadScene(nextSceneName, delayBeforeNextScene);
+
     }
 }
