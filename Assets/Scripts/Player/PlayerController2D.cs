@@ -13,6 +13,23 @@ public class PlayerController2D : MonoBehaviour
     [SerializeField] float airAcceleration = 30f;
     [SerializeField] float airDeceleration = 30f;
 
+    [Header("Run Stamina")]
+    [Tooltip("Seconds of running (Shift held while moving) a full bar lasts.")]
+    [SerializeField, Min(0.1f)] float runDuration = 2f;
+    [Tooltip("Seconds to fill the bar from empty to full.")]
+    [SerializeField, Min(0.1f)] float refillDuration = 3f;
+    [Tooltip("Seconds after Shift is released before the bar starts to fill.")]
+    [SerializeField, Min(0f)] float refillDelay = 1f;
+    [Tooltip("Position of the bar relative to Bigode's pivot.")]
+    [SerializeField] Vector2 barOffset = new Vector2(0f, 1.4f);
+    [SerializeField] Vector2 barSize = new Vector2(1f, 0.12f);
+    [SerializeField, Min(0f)] float barBorder = 0.02f;
+    [SerializeField] Color barFillColor = Color.white;
+    [SerializeField] Color barBackColor = Color.black;
+    [SerializeField] int barSortingOrder = 110;
+    [Tooltip("Optional. Empty uses the unlit Sprites/Default shader, so the bar stays bright in dark scenes.")]
+    [SerializeField] Material barMaterial;
+
     [Header("Jump")]
     [SerializeField] float jumpForce = 14f;
     [SerializeField] float coyoteTime = 0.1f;
@@ -65,6 +82,18 @@ public class PlayerController2D : MonoBehaviour
     int lastJump = -1;
     float airTime;
 
+    // Run stamina: 1 = full bar, 0 = empty.
+    float stamina = 1f;
+    float refillDelayTimer;
+    bool running;
+    GameObject barRoot;
+    Transform barFill;
+    Texture2D barTexture;
+    Sprite barSprite;
+    Material barRuntimeMaterial;
+
+    public float StaminaNormalized => stamina;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -79,11 +108,14 @@ public class PlayerController2D : MonoBehaviour
 
         groundFilter.SetLayerMask(groundLayer);
         groundFilter.SetNormalAngle(90f - maxGroundSlopeAngle, 90f + maxGroundSlopeAngle);
+
+        CreateStaminaBar(); // last, so GetComponentInChildren above never finds the bar's sprites
     }
 
     void Update()
     {
         ReadInput();
+        UpdateStamina();
         coyoteTimer -= Time.deltaTime;
         jumpBufferTimer -= Time.deltaTime;
         UpdateIdleTimer();
@@ -135,6 +167,106 @@ public class PlayerController2D : MonoBehaviour
             idleTimer = idleTimeBeforeSit;
     }
 
+    // ---------- Run stamina ----------
+
+    void UpdateStamina()
+    {
+        bool moving = Mathf.Abs(moveInput) > 0.01f;
+        running = runHeld && moving && stamina > 0f;
+
+        if (running)
+        {
+            // Draining: a full bar lasts runDuration seconds of running.
+            stamina = Mathf.Max(0f, stamina - Time.deltaTime / runDuration);
+            refillDelayTimer = refillDelay;
+        }
+        else if (runHeld)
+        {
+            // Shift is still held (standing still, or the bar is empty): the bar does not fill yet.
+            refillDelayTimer = refillDelay;
+        }
+        else if (refillDelayTimer > 0f)
+        {
+            // Shift released: wait refillDelay seconds first.
+            refillDelayTimer -= Time.deltaTime;
+        }
+        else
+        {
+            stamina = Mathf.Min(1f, stamina + Time.deltaTime / refillDuration);
+        }
+
+        UpdateStaminaBar();
+    }
+
+    void CreateStaminaBar()
+    {
+        // A 1x1 white pixel stretched into the bar. The pivot is on the left, so scaling X empties the bar from the right.
+        barTexture = new Texture2D(1, 1, TextureFormat.RGBA32, false);
+        barTexture.SetPixel(0, 0, Color.white);
+        barTexture.Apply();
+        barSprite = Sprite.Create(barTexture, new Rect(0f, 0f, 1f, 1f), new Vector2(0f, 0.5f), 1f);
+
+        Material material = barMaterial;
+        if (material == null)
+        {
+            Shader shader = Shader.Find("Sprites/Default"); // unlit: not darkened by the scene's 2D lights
+            if (shader != null)
+            {
+                barRuntimeMaterial = new Material(shader);
+                material = barRuntimeMaterial;
+            }
+        }
+
+        barRoot = new GameObject("StaminaBar");
+        barRoot.transform.SetParent(transform, false);
+        barRoot.transform.localPosition = barOffset;
+
+        var back = new GameObject("Back").AddComponent<SpriteRenderer>();
+        back.transform.SetParent(barRoot.transform, false);
+        back.sprite = barSprite;
+        back.color = barBackColor;
+        back.sortingOrder = barSortingOrder;
+        back.transform.localPosition = new Vector3(-barSize.x * 0.5f - barBorder, 0f, 0f);
+        back.transform.localScale = new Vector3(barSize.x + 2f * barBorder, barSize.y + 2f * barBorder, 1f);
+
+        var fill = new GameObject("Fill").AddComponent<SpriteRenderer>();
+        fill.transform.SetParent(barRoot.transform, false);
+        fill.sprite = barSprite;
+        fill.color = barFillColor;
+        fill.sortingOrder = barSortingOrder + 1;
+        fill.transform.localPosition = new Vector3(-barSize.x * 0.5f, 0f, 0f);
+        fill.transform.localScale = new Vector3(barSize.x, barSize.y, 1f);
+        barFill = fill.transform;
+
+        if (material != null)
+        {
+            back.sharedMaterial = material;
+            fill.sharedMaterial = material;
+        }
+
+        barRoot.SetActive(false);
+    }
+
+    // The bar only shows while it is not full.
+    void UpdateStaminaBar()
+    {
+        if (barRoot == null) return;
+
+        bool visible = stamina < 0.999f;
+        if (barRoot.activeSelf != visible)
+            barRoot.SetActive(visible);
+
+        if (visible)
+            barFill.localScale = new Vector3(barSize.x * stamina, barSize.y, 1f);
+    }
+
+    void OnDestroy()
+    {
+        if (barSprite != null) Destroy(barSprite);
+        if (barTexture != null) Destroy(barTexture);
+        if (barRuntimeMaterial != null) Destroy(barRuntimeMaterial);
+    }
+
     void CheckGrounded()
     {
         if (rb.IsTouching(groundFilter))
@@ -162,7 +294,7 @@ public class PlayerController2D : MonoBehaviour
     {
         float targetSpeed = standUpLockTimer > 0f
             ? 0f
-            : moveInput * moveSpeed * (runHeld ? runSpeedMultiplier : 1f);
+            : moveInput * moveSpeed * (running ? runSpeedMultiplier : 1f);
         bool accelerating = Mathf.Abs(targetSpeed) > 0.01f;
         float accelRate = isGrounded
             ? (accelerating ? groundAcceleration : groundDeceleration)

@@ -1319,7 +1319,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 31.187798, y: 8.7133045, z: -30}
+  m_LocalPosition: {x: 31.214542, y: 8.7133045, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1676,7 +1676,7 @@ BoxCollider2D:
   m_UsedByEffector: 1
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0075290203, y: -0.45619038}
+  m_Offset: {x: 0.03805101, y: -0.60290736}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1686,7 +1686,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.0268424, y: 0.11972839}
+  m_Size: {x: 1.7419436, y: 0.11665666}
   m_EdgeRadius: 0
 --- !u!1 &496885852
 GameObject:
@@ -2060,7 +2060,7 @@ Transform:
   m_GameObject: {fileID: 633054769}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 38.41908, y: 10.546665, z: -30}
+  m_LocalPosition: {x: 38.418827, y: 10.546665, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10577,6 +10577,38 @@ PrefabInstance:
     - target: {fileID: 1194070976971525494, guid: fa7c9a6ef9a0ea74abc5307b8f0d3d93, type: 3}
       propertyPath: managedReferences[3862493217794818155].m_FlipX
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137294380165347874, guid: fa7c9a6ef9a0ea74abc5307b8f0d3d93, type: 3}
+      propertyPath: barBorder
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137294380165347874, guid: fa7c9a6ef9a0ea74abc5307b8f0d3d93, type: 3}
+      propertyPath: moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137294380165347874, guid: fa7c9a6ef9a0ea74abc5307b8f0d3d93, type: 3}
+      propertyPath: barOffset.y
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137294380165347874, guid: fa7c9a6ef9a0ea74abc5307b8f0d3d93, type: 3}
+      propertyPath: runDuration
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137294380165347874, guid: fa7c9a6ef9a0ea74abc5307b8f0d3d93, type: 3}
+      propertyPath: refillDuration
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137294380165347874, guid: fa7c9a6ef9a0ea74abc5307b8f0d3d93, type: 3}
+      propertyPath: idleTimeBeforeSit
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137294380165347874, guid: fa7c9a6ef9a0ea74abc5307b8f0d3d93, type: 3}
+      propertyPath: groundAcceleration
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137294380165347874, guid: fa7c9a6ef9a0ea74abc5307b8f0d3d93, type: 3}
+      propertyPath: runSpeedMultiplier
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 5328926306974692096, guid: fa7c9a6ef9a0ea74abc5307b8f0d3d93, type: 3}
       propertyPath: m_LocalScale.x
