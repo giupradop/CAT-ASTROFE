@@ -1319,7 +1319,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 31.214542, y: 8.7133045, z: -30}
+  m_LocalPosition: {x: 31.232227, y: 8.7133045, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1927,7 +1927,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 4.6162643, y: 0.08943233}
+  m_Offset: {x: 4.6162643, y: -0.06394556}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1937,7 +1937,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 22.555496, y: 1.1788645}
+  m_Size: {x: 22.555496, y: 0.8721089}
   m_EdgeRadius: 0
 --- !u!4 &577482154
 Transform:
@@ -2060,7 +2060,7 @@ Transform:
   m_GameObject: {fileID: 633054769}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 38.418827, y: 10.546665, z: -30}
+  m_LocalPosition: {x: 38.418663, y: 10.546665, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2445,7 +2445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 147abcfdaeb9b224492004030e407c3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
-  narration: Ali! Na sua esquerda! Um pequeno rato parecia aguardar por Bigodes.
+  narration: Ali! Na sua esquerda! Nosso fugitivo!
   letterDelay: 0.04
   punctuationPause: 0.3
   voiceSource: {fileID: 2072518882}
@@ -5577,7 +5577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 147abcfdaeb9b224492004030e407c3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
-  narration: "O roedor fugitivo decidiu procurar ref\xFAgio no alto da \xE1rvore. Bigodes n\xE3o pretendia ficar para tr\xE1s."
+  narration: "O roedor decidiu procurar ref\xFAgio no alto da \xE1rvore, atr\xE1s dele!"
   letterDelay: 0.04
   punctuationPause: 0.15
   voiceSource: {fileID: 2042565208}
@@ -7334,8 +7334,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -2.8219278, y: -4.5389338}
-  - {x: -2.741599, y: 0.96229106}
+  - {x: -2.856016, y: -4.4083643}
+  - {x: -2.8391948, y: 1.394423}
   - {x: -1.3489798, y: 1.0642551}
   - {x: -0.6305848, y: 1.2876006}
   - {x: -0.00041653588, y: 1.4318862}
@@ -7529,7 +7529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 147abcfdaeb9b224492004030e407c3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
-  narration: "Bom... estamos um pouco longe de casa agora. Mas n\xE3o h\xE1 motivo para se preocupar... N\xE3o \xE9?..."
+  narration: "Oh n\xE3o! Pulamos a cerca! Como vamos voltar agora?!"
   letterDelay: 0.04
   punctuationPause: 0.3
   voiceSource: {fileID: 1796609578}
@@ -8345,7 +8345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 147abcfdaeb9b224492004030e407c3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
-  narration: "Saltando do alto da \xE1rvore para o outro lado da cerca, Bigodes persegue o fugitivo."
+  narration: Opa! Ele passou da cerca, melhor voltarmos.
   letterDelay: 0.04
   punctuationPause: 0.15
   voiceSource: {fileID: 2072518882}

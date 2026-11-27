@@ -26231,7 +26231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 147abcfdaeb9b224492004030e407c3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
-  narration: "Ali est\xE1 ela! Que maravilha!"
+  narration: "Ali est\xE1 a saida! Que maravilha!"
   letterDelay: 0.04
   punctuationPause: 0.2
   voiceSource: {fileID: 285321740}
@@ -26750,7 +26750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 147abcfdaeb9b224492004030e407c3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
-  narration: "Ah... certo. Bigodes est\xE1 de p\xE9 e se dirige \xE0 sa\xEDda. Deve haver uma..."
+  narration: Ah... vamos manter a calma.
   letterDelay: 0.04
   punctuationPause: 0.2
   voiceSource: {fileID: 1189982478}

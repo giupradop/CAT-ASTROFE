@@ -583,7 +583,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30.773876, y: 4.885391, z: -30}
+  m_LocalPosition: {x: 30.782776, y: 4.885391, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2706,7 +2706,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 37.984936, y: 0.12726378}
+  m_Offset: {x: 32.61853, y: 0.12726378}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2716,7 +2716,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 96.12986, y: 1.8145275}
+  m_Size: {x: 106.86267, y: 1.8145275}
   m_EdgeRadius: 0
 --- !u!212 &1088409910
 SpriteRenderer:
@@ -2823,7 +2823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 147abcfdaeb9b224492004030e407c3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
-  narration: "Ufa! Pelo menos n\xE3o \xE9 um laborat\xF3rio cheio de perigos mortais."
+  narration: "Ufa! Pelo menos n\xE3o \xE9 um daqueles laborat\xF3rios cheios de armadilhas."
   letterDelay: 0.04
   punctuationPause: 0.3
   voiceSource: {fileID: 280073470}
@@ -3358,6 +3358,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3672220331172170198, guid: fa6e7a666b8cb7143aa4654329ac6cb4, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 8644558737234440546}
+    - target: {fileID: 3672220331172170198, guid: fa6e7a666b8cb7143aa4654329ac6cb4, type: 3}
+      propertyPath: playEntrance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3672220331172170198, guid: fa6e7a666b8cb7143aa4654329ac6cb4, type: 3}
+      propertyPath: startOffset.x
+      value: -10.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3672220331172170198, guid: fa6e7a666b8cb7143aa4654329ac6cb4, type: 3}
+      propertyPath: virtualCamera
+      value: 
+      objectReference: {fileID: 633054770}
+    - target: {fileID: 3672220331172170198, guid: fa6e7a666b8cb7143aa4654329ac6cb4, type: 3}
+      propertyPath: disableDuringEntrance.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3672220331172170198, guid: fa6e7a666b8cb7143aa4654329ac6cb4, type: 3}
+      propertyPath: 'disableDuringEntrance.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1884512101}
     - target: {fileID: 3803900768381744079, guid: fa6e7a666b8cb7143aa4654329ac6cb4, type: 3}
       propertyPath: m_Resource
       value: 
@@ -4996,7 +5020,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 147abcfdaeb9b224492004030e407c3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
-  narration: "Cuidado com a camera! N\xE3o queremos que ela nos veja! Rapido, embaixo da mesa!"
+  narration: Cuidado com a camera! Rapido, para de baixo da mesa!
   letterDelay: 0.03
   punctuationPause: 0.2
   voiceSource: {fileID: 310719717}
@@ -8127,6 +8151,17 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 833500150743289671}
   m_Enabled: 1
+--- !u!114 &8644558737234440546 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3137294380165347874, guid: fa7c9a6ef9a0ea74abc5307b8f0d3d93, type: 3}
+  m_PrefabInstance: {fileID: 2967905891663869213}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833500150743289671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 276742582d7b6924fa0865d34947ee9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController2D
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
